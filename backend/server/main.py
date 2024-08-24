@@ -2,24 +2,11 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Depends, Request, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from hashing import Hash
-from jwttoken import create_access_token
-from oauth import get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from happinessScore import Happiness as happ
-from cluster import ClusterQuestions
-
-
-def __init__(self):
-    self.happiness = happ()
-
-
-def __init__(self):
-    self.cluster = ClusterQuestions()
 
 # score = Happiness.calculate_happiness_score(input_dict)
 # label = ClusterQuestions.predict_label(question)
