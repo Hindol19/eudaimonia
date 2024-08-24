@@ -33,4 +33,49 @@ const Sidebar = ({ classes, activeTab, username }) => {
     // console.log(localStorage);
     router.push("/login");
   };
-}
+return (
+  <div className={`${classes} bg-altDark fixed left-0 h-screen text-light`}>
+    <Link
+      href="/"
+      className="h-24 flex items-center justify-center text-5xl tracking-widest w-full border-b-2 border-solid border-light"
+    >
+      LOGO
+    </Link>
+
+    <div className="pl-6 my-6 ">
+      <SidebarItem
+        path="/question"
+        name="Home"
+        Icon={HomeIcon}
+        active={activeTab}
+      />
+      <SidebarItem name="Chatbot" Icon={ChatBubbleIcon} active={activeTab} />
+      <SidebarItem
+        path="/happiness"
+        name="Happiness Tracker"
+        Icon={EmojiEmotionsIcon}
+        active={activeTab}
+      />
+      <SidebarItem
+          name="Notifications"
+          Icon={NotificationsIcon}
+          active={activeTab}
+        />
+        <SidebarItem name="Contact" Icon={CallIcon} active={activeTab} />
+      </div>
+      <div className="pl-6 my-6 pt-6 border-t-2 border-solid border-light w-full bottom-0">
+        <SidebarItem name={username} Icon={AccountCircleIcon} />
+        <SidebarItem name="Privacy Policy" Icon={PrivacyTipIcon} />
+        <div
+          onClick={logOut}
+          className={`text-lg flex items-center w-full my-2 h-12 pl-5 rounded-l-full cursor-pointer`}
+        >
+          <LogoutIcon className="mr-3" />
+          <div className="w-[80%]">Log Out</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

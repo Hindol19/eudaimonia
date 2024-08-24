@@ -51,3 +51,11 @@ db = client["User"]
 @app.get('/')
 def index():
     return {'data': 'Hello World 2'}
+
+
+@app.get('/get_questions')
+def get_questions(username: str):
+    userid = db["users"].find_one({"username": username})['_id']
+    questions = list(db.questions.find(
+        {"userid": userid}, {"_id": 0, "userid": 0}))
+    return questions
