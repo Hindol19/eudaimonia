@@ -24,7 +24,7 @@ const SidebarItem = ({ name, Icon, classes, active, path = "/" }) => {
       <div className="w-[80%]">{name}</div>
     </Link>
   );
-
+};
 const Sidebar = ({ classes, activeTab, username }) => {
   // const router = useRouter();
   const router = useRouter();
