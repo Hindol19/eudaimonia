@@ -83,7 +83,7 @@ const question = () => {
     try {
       const response = await axios.get("http://localhost:8000/get_questions", {
         params: {
-          username: "patient",
+          username: userDetails[0],
         },
       });
 
@@ -114,9 +114,9 @@ const question = () => {
   };
   useEffect(() => {
     getQuestions();
-  }, []);
+  }, [userDetails[0]]);
   return (
-    <Layout>
+    <Layout pageTitle="Your Questions" sideTab="Home" username={userDetails[0]}>
       <div>
         <PostQuestion userDetails={userDetails} getQuestions={getQuestions} />
         <div className="flex flex-row my-5">
