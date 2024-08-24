@@ -58,7 +58,7 @@ const QuestionCard = ({
                 onChange={(e) => setNewAnswer(e.target.value)}
               />
               <button
-                className="bg-acc2 px-5 py-2 text-light rounded-md"
+                className="bg-acc px-5 py-2 text-light rounded-md"
                 type="submit"
               >
                 Answer
