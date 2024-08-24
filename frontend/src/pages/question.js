@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import QuestionCard from "@/components/QuestionCard";
+// import QuestionCard from "@/components/QuestionCard";
 import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import PostAddIcon from "@mui/icons-material/PostAdd";
