@@ -25,3 +25,12 @@ const SidebarItem = ({ name, Icon, classes, active, path = "/" }) => {
     </Link>
   );
 };
+const Sidebar = ({ classes, activeTab, username }) => {
+  // const router = useRouter();
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.clear();
+    // console.log(localStorage);
+    router.push("/login");
+  };
+}
