@@ -25,4 +25,37 @@ const answer = () => {
           console.log(error);
         }
       };
-}
+      useEffect(() => {
+        getQuestions();
+      }, [userDetails[0]]);
+    
+      console.log(qList);
+    
+      return (
+        <div>
+          <Header title="Questions by Patients" />
+          <div className="flex flex-col items-center w-full">
+            {qList.map((q, ind) => {
+              return (
+                q.type === "unanswered" && (
+                  <QuestionCard
+                    ques={q}
+                    key={ind}
+                    question={q.question}
+                    answer={q.answer}
+                    type={q.type}
+                    therapist_name={q.therapist_name}
+                    therapist_rating={q.therapist_rating}
+                    user="doc"
+                    username={userDetails[0]}
+                  />
+                )
+              );
+            })}
+          </div>
+        </div>
+      );
+    };
+    
+    export default answer;
+
