@@ -33,30 +33,30 @@ const Sidebar = ({ classes, activeTab, username }) => {
     // console.log(localStorage);
     router.push("/login");
   };
-return (
-  <div className={`${classes} bg-altDark fixed left-0 h-screen text-light`}>
-    <Link
-      href="/"
-      className="h-24 flex items-center justify-center text-5xl tracking-widest w-full border-b-2 border-solid border-light"
-    >
-      LOGO
-    </Link>
+  return (
+    <div className={`${classes} bg-altDark fixed left-0 h-screen text-light`}>
+      <Link
+        href="/"
+        className="h-24 flex items-center justify-center text-5xl tracking-widest w-full border-b-2 border-solid border-light"
+      >
+        LOGO
+      </Link>
 
-    <div className="pl-6 my-6 ">
-      <SidebarItem
-        path="/question"
-        name="Home"
-        Icon={HomeIcon}
-        active={activeTab}
-      />
-      <SidebarItem name="Chatbot" Icon={ChatBubbleIcon} active={activeTab} />
-      <SidebarItem
-        path="/happiness"
-        name="Happiness Tracker"
-        Icon={EmojiEmotionsIcon}
-        active={activeTab}
-      />
-      <SidebarItem
+      <div className="pl-6 my-6 ">
+        <SidebarItem
+          path="/question"
+          name="Home"
+          Icon={HomeIcon}
+          active={activeTab}
+        />
+        <SidebarItem name="Chatbot" Icon={ChatBubbleIcon} active={activeTab} />
+        <SidebarItem
+          path="/apt"
+          name="Make an Appointment"
+          Icon={EmojiEmotionsIcon}
+          active={activeTab}
+        />
+        <SidebarItem
           name="Notifications"
           Icon={NotificationsIcon}
           active={activeTab}
