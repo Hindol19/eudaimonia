@@ -5,57 +5,56 @@ import axios from "axios";
 import QuestionCard from "@/components/QuestionCard";
 
 const answer = () => {
-    const [activeCategory, setActiveCategory] = useState("All");
-    const [userDetails, setUserDetails] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [userDetails, setUserDetails] = useState([]);
 
-    const router = useRouter();
-    const [qList, setQList] = useState([]);
+  const router = useRouter();
+  const [qList, setQList] = useState([]);
 
-    const getQuestions = async () => {
-        try {
-          const response = await axios.get("http://localhost:8000/get_questions", {
-            params: {
-              username: "patient",
-            },
-          });
-    
-          setQList(response?.data);
-          // console.log(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      useEffect(() => {
-        getQuestions();
-      }, [userDetails[0]]);
-    
-      console.log(qList);
-    
-      return (
-        <div>
-          <Header title="Questions by Patients" />
-          <div className="flex flex-col items-center w-full">
-            {qList.map((q, ind) => {
-              return (
-                q.type === "unanswered" && (
-                  <QuestionCard
-                    ques={q}
-                    key={ind}
-                    question={q.question}
-                    answer={q.answer}
-                    type={q.type}
-                    therapist_name={q.therapist_name}
-                    therapist_rating={q.therapist_rating}
-                    user="doc"
-                    username={userDetails[0]}
-                  />
-                )
-              );
-            })}
-          </div>
-        </div>
-      );
-    };
-    
-    export default answer;
+  const getQuestions = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/get_questions", {
+        params: {
+          username: "patient",
+        },
+      });
 
+      setQList(response?.data);
+      // console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getQuestions();
+  }, [userDetails[0]]);
+
+  console.log(qList);
+
+  return (
+    <div className="">
+      <Header title="Questions by Patients" />
+      <div className="flex flex-col items-center w-full ">
+        {qList.map((q, ind) => {
+          return (
+            q.type === "unanswered" && (
+              <QuestionCard
+                ques={q}
+                key={ind}
+                question={q.question}
+                answer={q.answer}
+                type={q.type}
+                therapist_name={q.therapist_name}
+                therapist_rating={q.therapist_rating}
+                user="doc"
+                username={userDetails[0]}
+              />
+            )
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default answer;
