@@ -33,7 +33,6 @@ const Sidebar = ({ classes, activeTab, username }) => {
     // console.log(localStorage);
     router.push("/login");
   };
-}
 return (
   <div className={`${classes} bg-altDark fixed left-0 h-screen text-light`}>
     <Link
