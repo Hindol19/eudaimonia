@@ -10,7 +10,22 @@ const answer = () => {
 
   const router = useRouter();
   const [qList, setQList] = useState([]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
+    const savedUserName = localStorage.getItem("username");
+    const savedUserType = localStorage.getItem("usertype");
+    if (!token) {
+      router.push("/login");
+    }
+    if (savedUserType === "patient") {
+      router.push("/login");
+      // alert("hh");
+    } else {
+      setUserDetails([savedUserName, savedUserType]);
+      // setMode("dark");
+    }
+  }, []);
   const getQuestions = async () => {
     try {
       const response = await axios.get("http://localhost:8000/get_questions", {
