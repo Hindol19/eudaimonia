@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Services from "../components/Services";
-// import Cta from "../components/Cta";
+import Cta from "../components/Cta";
 import Team from "../components/Team";
 
 
@@ -21,7 +21,7 @@ export default function Home() {
       <Navbar/>
       <Services/>
       <Team/>
-      {/* <Cta/> */}
+      <Cta/>
     </div>
   ) 
 }
