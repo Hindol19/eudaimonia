@@ -15,9 +15,9 @@ export default function Header({ title }) {
   return (
     <div className="border-solid border-b-2 border-altDark border-opacity-30 h-24  flex flex-row items-center justify-between w-full">
       <div className="flex flex-row items-center">
-        <h1 className="text-3xl text-altDark mx-5">{title}</h1>
+        <h1 className="text-3xl text-dark mx-5">{title}</h1>
       </div>
-      <div className="mr-5 flex text-2xl text-altDark items-center">
+      <div className="mr-5 flex text-2xl text-dark items-center">
         {currentDate}
       </div>
     </div>
