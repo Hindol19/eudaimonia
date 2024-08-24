@@ -3,7 +3,7 @@ import axios from "axios";
 
 import Layout from "@/components/Layout";
 
-const CustomRadio = ({digit, attributes, setCategories, categories})=>{
+const CustomRadio = ({digit, attribute, setCategories, categories})=>{
   const [isClicked, setIsClicked]= useState(0)
   const updateCategories = (attribute, digit) => {
     let temp = categories;
@@ -21,11 +21,68 @@ const CustomRadio = ({digit, attributes, setCategories, categories})=>{
     </div>
   );
 }
+const RatingSystem = ({attribute, categories, setCategories}) => {
+  <div>
+    <h3>{attribute}</h3>
+    <div>
+      <CustomRadio digit="1" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="2" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="3" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="4" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="5" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="6" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="7" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="8" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="9" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+      <CustomRadio digit="10" 
+      attribute={attribute} 
+      categories={categories} 
+      setCategories={setCategories}
+      />
+    </div>
+  </div>
+}
 const happiness = () => {
   return (
     <Layout>
       <form>
-        <Rating></Rating>
+        
       </form>
     </Layout>
   );
