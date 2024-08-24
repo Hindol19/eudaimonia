@@ -152,6 +152,11 @@ def up_questions(request: Question):
     db.questions.insert_one(question_object)
 
 
+@app.post('/up_answer')
+def up_questions(request: Question):
+    print(request)
+
+
 @app.get('/get_questions')
 def get_questions(username: str):
     userid = db["users"].find_one({"username": username})['_id']

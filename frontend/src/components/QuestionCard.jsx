@@ -16,6 +16,7 @@ const QuestionCard = ({
   const handleAnswer = async (e) => {
     e.preventDefault();
     let temp = ques;
+    temp.username = username;
     temp.type = "answered";
     temp.answer = newAnswer;
     temp.therapist_name = username;
