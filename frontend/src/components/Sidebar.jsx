@@ -78,3 +78,5 @@ return (
     </div>
   );
 };
+
+export default Sidebar;
