@@ -72,6 +72,7 @@ const PostQuestion = ({ hidden = true, userDetails, getQuestions }) => {
     </div>
   );
 };
+
 const question = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [userDetails, setUserDetails] = useState([]);
@@ -92,6 +93,22 @@ const question = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const savedUserName = localStorage.getItem("username");
+    const savedUserType = localStorage.getItem("usertype");
+    if (!token) {
+      router.push("/login");
+    }
+    if (savedUserType === "doctor") {
+      router.push("/login");
+      // alert("hh");
+    } else {
+      setUserDetails([savedUserName, savedUserType]);
+      // setMode("dark");
+    }
+  }, []);
   const handleCategory = (cat) => {
     setActiveCategory(cat);
   };
