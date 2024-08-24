@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-// import QuestionCard from "@/components/QuestionCard";
+import QuestionCard from "@/components/QuestionCard";
 import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -101,30 +101,52 @@ const question = () => {
   return (
     <Layout>
       <div>
-        <div className="flex flex-row my-4 ">
-          <PostQuestion userDetails={userDetails} getQuestions={getQuestions} />
-          <div className="flex flex-row my-5">
-            <CategoryTab
-              handleCategory={handleCategory}
-              activeCategory={activeCategory}
-              title="All"
-            />
-            <CategoryTab
-              handleCategory={handleCategory}
-              activeCategory={activeCategory}
-              title="Answered"
-            />
-            <CategoryTab
-              handleCategory={handleCategory}
-              activeCategory={activeCategory}
-              title="Unanswered"
-            />
-            <CategoryTab
-              handleCategory={handleCategory}
-              activeCategory={activeCategory}
-              title="Discarded"
-            />
-          </div>
+        <PostQuestion userDetails={userDetails} getQuestions={getQuestions} />
+        <div className="flex flex-row my-5">
+          <CategoryTab
+            handleCategory={handleCategory}
+            activeCategory={activeCategory}
+            title="All"
+          />
+          <CategoryTab
+            handleCategory={handleCategory}
+            activeCategory={activeCategory}
+            title="Answered"
+          />
+          <CategoryTab
+            handleCategory={handleCategory}
+            activeCategory={activeCategory}
+            title="Unanswered"
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          {qList.toReversed().map((q, ind) => {
+            if (activeCategory === "All") {
+              return (
+                <QuestionCard
+                  key={ind}
+                  question={q.question}
+                  answer={q.answer}
+                  type={q.type}
+                  therapist_name={q.therapist_name}
+                  therapist_rating={q.therapist_rating}
+                />
+              );
+            } else {
+              return (
+                activeCategory.toLowerCase() === q.type && (
+                  <QuestionCard
+                    key={ind}
+                    question={q.question}
+                    answer={q.answer}
+                    type={q.type}
+                    therapist_name={q.therapist_name}
+                    therapist_rating={q.therapist_rating}
+                  />
+                )
+              );
+            }
+          })}
         </div>
       </div>
     </Layout>
