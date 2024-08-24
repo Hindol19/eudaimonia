@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Layout from "@/components/Layout";
-const CategoryTab = ({ activeCategory = "All", title }) => {
+const CategoryTab = ({ activeCategory = "All", title, handleCategory }) => {
   return (
-    <div className="text-dark border-2 border-dark border-solid px-4 py-2 mx-4 cursor-pointer">
+    <div
+      onClick={() => handleCategory(title)}
+      className={`mx-4 px-6 py-2 bg-altLight rounded-full cursor-pointer ${
+        activeCategory === title && "bg-primaryDark"
+      }`}
+    >
       {title}
     </div>
   );
