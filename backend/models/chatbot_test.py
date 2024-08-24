@@ -14,7 +14,7 @@ def preprocess_text(text):
     return text
 
 # Load your dataset
-data = pd.read_csv('path_to_your_dataset.csv')  # Replace with your dataset path
+data = pd.read_csv('backend\\models\\data\\train_data.csv')  # Replace with your dataset path
 
 # Apply preprocessing
 data['text'] = data['text'].apply(preprocess_text)

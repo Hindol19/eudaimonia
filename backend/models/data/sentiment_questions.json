@@ -1,0 +1,155 @@
+{
+    "questions": {
+        "anxiety": [
+            {
+                "question": "Do you often feel overwhelmed or nervous in certain situations?"
+            },
+            {
+                "question": "Are you experiencing difficulty in calming your mind?"
+            },
+            {
+                "question": "Do you find yourself worrying about things more than usual?"
+            },
+            {
+                "question": "Are you looking for ways to relax and reduce your anxiety?"
+            },
+            {
+                "question": "Do you feel tense or on edge most of the time?"
+            }
+        ],
+        "depression": [
+            {
+                "question": "Do you feel a persistent sense of sadness or emptiness?"
+            },
+            {
+                "question": "Are you struggling to find joy in activities you once enjoyed?"
+            },
+            {
+                "question": "Do you often feel tired or lacking in energy?"
+            },
+            {
+                "question": "Are you looking for ways to boost your mood?"
+            },
+            {
+                "question": "Do you feel disconnected from others and isolated?"
+            }
+        ],
+        "stress": [
+            {
+                "question": "Are you feeling overwhelmed by your daily responsibilities?"
+            },
+            {
+                "question": "Do you often feel like there isn't enough time to complete your tasks?"
+            },
+            {
+                "question": "Are you looking for ways to manage your stress more effectively?"
+            },
+            {
+                "question": "Do you struggle to relax even when you have free time?"
+            },
+            {
+                "question": "Do you often feel physically tense or irritable?"
+            }
+        ],
+        "guilt": [
+            {
+                "question": "Do you often dwell on past mistakes or regrets?"
+            },
+            {
+                "question": "Are you feeling guilty about something that happened recently?"
+            },
+            {
+                "question": "Do you struggle with forgiving yourself for past actions?"
+            },
+            {
+                "question": "Are you looking for ways to cope with feelings of guilt?"
+            },
+            {
+                "question": "Do you find it hard to move on from situations where you feel you were wrong?"
+            }
+        ],
+        "fear": [
+            {
+                "question": "Do you often feel afraid of facing certain situations?"
+            },
+            {
+                "question": "Are you struggling with fears that seem irrational to you?"
+            },
+            {
+                "question": "Do you avoid situations or people because of fear?"
+            },
+            {
+                "question": "Are you looking for ways to overcome your fears?"
+            },
+            {
+                "question": "Do you feel paralyzed by fear in certain circumstances?"
+            }
+        ],
+        "introversion": [
+            {
+                "question": "Do you prefer spending time alone rather than in large groups?"
+            },
+            {
+                "question": "Are you looking for ways to recharge after social interactions?"
+            },
+            {
+                "question": "Do you find peace and fulfillment in solitary activities?"
+            }
+        ],
+        "extroversion": [
+            {
+                "question": "Do you enjoy being in social settings and meeting new people?"
+            },
+            {
+                "question": "Are you looking for activities that allow you to interact with others?"
+            },
+            {
+                "question": "Do you feel energized by socializing and participating in group activities?"
+            }
+        ],
+        "openness": [
+            {
+                "question": "Are you curious and open to trying new experiences?"
+            },
+            {
+                "question": "Do you enjoy exploring new ideas and creative projects?"
+            },
+            {
+                "question": "Are you looking for opportunities to learn and grow in new areas?"
+            }
+        ],
+        "conscientiousness": [
+            {
+                "question": "Do you prefer to stay organized and plan your tasks carefully?"
+            },
+            {
+                "question": "Are you looking for ways to set and achieve your goals?"
+            },
+            {
+                "question": "Do you value maintaining a consistent and healthy routine?"
+            }
+        ],
+        "agreeableness": [
+            {
+                "question": "Do you enjoy helping others and resolving conflicts peacefully?"
+            },
+            {
+                "question": "Are you looking for ways to foster positive relationships with others?"
+            },
+            {
+                "question": "Do you strive to be kind and supportive in your interactions with others?"
+            }
+        ],
+        "neuroticism": [
+            {
+                "question": "Do you often feel emotionally reactive or easily upset?"
+            },
+            {
+                "question": "Are you looking for ways to create a stable routine in your life?"
+            },
+            {
+                "question": "Do you want to focus on positive aspects of your life and practice gratitude?"
+            }
+        ]
+    }
+}
