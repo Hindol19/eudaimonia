@@ -79,6 +79,15 @@ const RatingSystem = ({attribute, categories, setCategories}) => {
   </div>
 }
 const happiness = () => {
+  const [categories, setCategories] = useState({
+    username: "patient",
+    emotional_well_being: 0,
+    social_interactions: 0,
+    physical_health: 0,
+    stress_levels: 0,
+    life_satisfaction: 0,
+  });
+  console.log(categories);
   return (
     <Layout>
       <form>
