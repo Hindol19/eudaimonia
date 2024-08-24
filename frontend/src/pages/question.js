@@ -1,6 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
+import QuestionCard from "@/components/QuestionCard";
 import Layout from "@/components/Layout";
+import { useRouter } from "next/router";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import axios from "axios";
 const CategoryTab = ({ activeCategory = "All", title, handleCategory }) => {
   return (
     <div
@@ -69,22 +74,57 @@ const PostQuestion = ({ hidden = true, userDetails, getQuestions }) => {
 };
 const question = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [userDetails, setUserDetails] = useState([]);
+  const [qList, setQList] = useState([]);
+  const router = useRouter();
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get("");
+      const response = await axios.get("http://localhost:8000/get_questions", {
+        params: {
+          username: "patient",
+        },
+      });
+
+      setQList(response?.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-
+  const handleCategory = (cat) => {
+    setActiveCategory(cat);
+  };
+  useEffect(() => {
+    getQuestions();
+  }, []);
   return (
     <Layout>
       <div>
         <div className="flex flex-row my-4 ">
-          <CategoryTab title="All" />
-          <CategoryTab title="Answered" />
-          <CategoryTab title="Unanswered" />
+          <PostQuestion userDetails={userDetails} getQuestions={getQuestions} />
+          <div className="flex flex-row my-5">
+            <CategoryTab
+              handleCategory={handleCategory}
+              activeCategory={activeCategory}
+              title="All"
+            />
+            <CategoryTab
+              handleCategory={handleCategory}
+              activeCategory={activeCategory}
+              title="Answered"
+            />
+            <CategoryTab
+              handleCategory={handleCategory}
+              activeCategory={activeCategory}
+              title="Unanswered"
+            />
+            <CategoryTab
+              handleCategory={handleCategory}
+              activeCategory={activeCategory}
+              title="Discarded"
+            />
+          </div>
         </div>
       </div>
     </Layout>
