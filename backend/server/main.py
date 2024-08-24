@@ -108,63 +108,6 @@ def index():
     return {'data': 'Hello World 2'}
 
 
-@app.post('/register')
-def create_user(request: User):
-    # Check if the user already exists
-    existing_user = db["users"].find_one({"username": request.username})
-    if existing_user:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Username already registered")
-
-    # If the user doesnt exist
-    hashed_pass = Hash.bcrypt(request.password)
-    user_object = request.model_dump()
-    user_object["password"] = hashed_pass
-    # user_object["usertype"] = request.usertype
-    print(user_object)
-    user_id = db.users.insert_one(user_object)
-    # print(user)
-    return {"res": "created"}
-
-
-@app.post('/login')
-async def login(request: Login):
-    user = db["users"].find_one({"username": request.username})
-
-    # print(request)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'No user found with this {request.username} username')
-    if not Hash.verify(user["password"], request.password):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Wrong Username or password')
-    access_token = create_access_token(data={"sub": user["username"]})
-
-    return {"access_token": access_token, "token_type": "bearer", "username": user["username"], "usertype": user["usertype"]}
-
-
-@app.post('/happy')
-def happy(request: Happiness):
-    # Happiness = Happiness()
-    print(request)
-    score = happ.calculate_happiness_score(request)
-    # print(request, score)
-
-
-@app.post('/up_questions')
-def up_questions(request: Question):
-    # DEMO QUESTION
-    # Being around people makes me anxious enough to make me not leave home for days. How do I deal with this?
-    # print(request)
-    userid = db["users"].find_one({"username": request.username})['_id']
-    question_object = request.model_dump()
-    question_object['userid'] = userid
-    question_object['label'] = ClusterQuestions.predict_label(request.question)
-    del question_object['username']
-    # print(question_object)
-    db.questions.insert_one(question_object)
-
-
 @app.get('/get_questions')
 def get_questions(username: str):
     userid = db["users"].find_one({"username": username})['_id']
