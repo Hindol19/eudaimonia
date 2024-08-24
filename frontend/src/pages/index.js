@@ -19,9 +19,9 @@ export default function Home() {
       </Head>
       
       <Navbar/>
-      {/* <Services/>
-      <Team/>
-      <Cta/> */}
+      <Services/>
+      {/* <Team/>
+      <Cta/>  */}
     </div>
   ) 
 }
