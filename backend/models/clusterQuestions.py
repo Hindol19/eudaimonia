@@ -33,8 +33,8 @@ kmeans.fit(X)
 
 
 #  Save the KMeans model and TF-IDF vectorizer
-model_filename = 'backend\\models\\kmeans_model.pkl'
-vectorizer_filename = 'backend\\models\\tfidf_vectorizer.pkl'
+model_filename = 'backend\\models\\model\\kmeans_model.pkl'
+vectorizer_filename = 'backend\\models\\model\\tfidf_vectorizer.pkl'
 
 joblib.dump(kmeans, model_filename)
 joblib.dump(vectorizer, vectorizer_filename)
