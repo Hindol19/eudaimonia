@@ -29,9 +29,9 @@ uvicorn main:app --reload
 
 Install Dependencies:
 
-``bash
+```bash
 npm i
-``
+```
 
 Run it
 
