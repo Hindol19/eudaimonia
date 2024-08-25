@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 import joblib
 
 # Load the CSV file
-data = pd.read_csv('..\\models\\data\\questions.csv')
+data = pd.read_csv('backend\\models\\data\\questions.csv')
 
 # Preprocess the text
 nltk.download('stopwords')
