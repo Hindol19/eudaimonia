@@ -150,7 +150,10 @@ async def login(request: Login):
 
 @app.post('/generate_report')
 def generate_report(request: Survey):
-    print(request)
+    request = str(request)
+    # print(request, type(request))
+    recommendations = Diagnose.get_analysis_with_recommendations(request)
+    print(recommendations)
 
 
 @app.post('/up_questions')

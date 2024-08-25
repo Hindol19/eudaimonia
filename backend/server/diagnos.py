@@ -45,24 +45,24 @@ class Diagnose:
 
     # Define analysis functions
     def analyze_sentiment(text):
-        return Diagnos.sentiment_pipeline(text)
+        return Diagnose.sentiment_pipeline(text)
 
     def classify_psychological_state(text):
-        inputs = Diagnos.tokenizer(text, return_tensors="pt")
-        outputs = Diagnos.model(**inputs)
+        inputs = Diagnose.tokenizer(text, return_tensors="pt")
+        outputs = Diagnose.model(**inputs)
         predictions = torch.sigmoid(outputs.logits).detach(
         ).numpy().flatten()  # Flatten the array
         return predictions
 
     def analyze_topics(text):
-        bow = Diagnos.dictionary.doc2bow(text.split())
-        topics = Diagnos.lda_model.get_document_topics(bow)
+        bow = Diagnose.dictionary.doc2bow(text.split())
+        topics = Diagnose.lda_model.get_document_topics(bow)
         return topics
 
     def analyze_text(text):
-        sentiment = Diagnos.analyze_sentiment(text)
-        predictions = Diagnos.classify_psychological_state(text)
-        topics = Diagnos.analyze_topics(text)
+        sentiment = Diagnose.analyze_sentiment(text)
+        predictions = Diagnose.classify_psychological_state(text)
+        topics = Diagnose.analyze_topics(text)
 
         return {
             'sentiment': sentiment,
@@ -78,7 +78,7 @@ class Diagnose:
         max_state = states[max_index]
 
         # Retrieve the relevant recommendations
-        recommendations = Diagnos.responses_data.get(
+        recommendations = Diagnose.responses_data.get(
             max_state, {}).get('solutions', [])
 
         # Select two random recommendations from the most significant state
@@ -117,8 +117,8 @@ class Diagnose:
         return report
 
     def get_analysis_with_recommendations(text):
-        analysis_result = Diagnos.analyze_text(text)
-        recommendations = Diagnos.provide_recommendations(
+        analysis_result = Diagnose.analyze_text(text)
+        recommendations = Diagnose.provide_recommendations(
             predictions=analysis_result['predictions'],
             sentiment=analysis_result['sentiment']
         )
@@ -131,8 +131,8 @@ class Diagnose:
 # user_input = input("Please enter your text: ")
 
 # # Analyze the input and generate report
-# result = Diagnos.get_analysis_with_recommendations(user_input)
-# report_dict = Diagnos.generate_report_dict(user_input, result['analysis'], result['recommendations'])
+# result = Diagnose.get_analysis_with_recommendations(user_input)
+# report_dict = Diagnose.generate_report_dict(user_input, result['analysis'], result['recommendations'])
 
 # # Print the report dictionary
 # print(json.dumps(report_dict, indent=2))
