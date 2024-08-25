@@ -13,9 +13,7 @@ pip install -r requirements.txt
 bash
 `
 python clusterQuestions.py
-
 python sentiment_test.py
-
 python diagnos.py
 `
 
