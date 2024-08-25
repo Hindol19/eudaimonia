@@ -2,7 +2,7 @@ import React from 'react'
 
 const Services = () => {
   return (
-    <div className="container mx-auto py-20" id='services'>
+    <div className="container mx-auto py-20 mt-[300px]" id='services'>
         <p className="text-base lg:text-xl font-medium text-gray-500 text-center">
             Why choose EUDAIMONIA
         </p>

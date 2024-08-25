@@ -4,7 +4,7 @@ const Navbar = () => {
     return (
         <div className='container mx-auto py-4 fixed bg-dark bg-opacity-40 top-0 left-0 backdrop-blur-md'>
             <div className="flex justify-between items-center mx-6 gap-5">
-                <img src="/assets/logo.svg" alt="logo" />
+                <h2 className='text-xl italic'>Eudaimonia</h2>
                 <div className="flex justify-center lg:justify-between items-center gap-5">
                     <a href='#services' className='hover:bg-dark hover:text-white hover:rounded hover:py-1 hover:px-1'>Our Services</a>
                     <a href='#team' className='hover:bg-dark hover:text-white hover:rounded hover:py-1 hover:px-1'>Our team </a>
