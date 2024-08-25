@@ -98,10 +98,10 @@ def generate_report(text, analysis_result, recommendations):
         report += f"    {state}: {predictions[i] * 100:.2f}%\n"
     
     
-    # Recommendations
-    report += "Recommendations:\n"
-    for rec in recommendations:
-        report += f"  - {rec}\n"
+    # # Recommendations
+    # report += "Recommendations:\n"
+    # for rec in recommendations:
+    #     report += f"  - {rec}\n"
 
     return report
 
