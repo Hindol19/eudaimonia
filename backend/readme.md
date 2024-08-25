@@ -4,38 +4,38 @@
 
 Install Modules:
 
-bash
+```bash
 pip install -r requirements.txt
-
+```
 
 ### Train the models
 
-bash
-`
+```bash
 python clusterQuestions.py
 python sentiment_test.py
 python diagnos.py
-`
+```
 
 ### Start Server
 
 Run it
 
-bash
+```bash
 cd ./backend/server
 uvicorn main:app --reload
-
+```
 
 ### Start Frontend
 
 Install Dependencies:
 
-bash
+``bash
 npm i
-
+``
 
 Run it
 
-bash
+```bash
 cd frontend
 npm run dev
+```
