@@ -1,16 +1,19 @@
 import json
 import torch
 from transformers import BertTokenizer, BertForSequenceClassification, pipeline
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from gensim import corpora
 from gensim.models import LdaModel
-import numpy as np
+import os
 
-model_save_path = "backend\\models\\bert_psychological_state_model.pth"
-tokenizer_save_path = "backend\\models\\bert_tokenizer"
-lda_model_save_path = "backend\\models\\lda_model"
-dictionary_save_path = "backend\\models\\lda_dictionary.dict"
-sentiment_pipeline_save_path = "backend\\models\\sentiment_analysis_pipeline"
+# Define file paths
+model_save_path = os.path.join("backend", "models", "bert_psychological_state_model.pth")
+tokenizer_save_path = os.path.join("backend", "models", "bert_tokenizer")
+lda_model_save_path = os.path.join("backend", "models", "lda_model")
+dictionary_save_path = os.path.join("backend", "models", "lda_dictionary.dict")
+sentiment_pipeline_save_path = os.path.join("backend", "models", "sentiment_analysis_pipeline")
+
+recommendations_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
+responses_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
 
 # Load the BERT model
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=5)
@@ -27,16 +30,12 @@ dictionary = corpora.Dictionary.load(dictionary_save_path)
 # Load sentiment analysis pipeline
 sentiment_pipeline = pipeline("sentiment-analysis", model=sentiment_pipeline_save_path, tokenizer=sentiment_pipeline_save_path)
 
-# Define file paths
-questions_file_path = 'backend\\models\\data\\sentiment_questions.json'
-recommendations_file_path = 'backend\\models\\data\\recommendations.json'
-
 # Load JSON files
-with open(questions_file_path, 'r') as file:
-    questions = json.load(file)
-
 with open(recommendations_file_path, 'r') as file:
     recommendations_data = json.load(file)
+
+with open(responses_file_path, 'r') as file:
+    responses_data = json.load(file)
 
 # Define analysis functions
 def analyze_sentiment(text):
@@ -65,23 +64,46 @@ def analyze_text(text):
     }
 
 def provide_recommendations(predictions, sentiment):
-    # Example thresholds and recommendations
     stress_threshold = 0.7
     anxiety_threshold = 0.7
 
     recommendations = []
 
     if predictions[0] > stress_threshold:
-        recommendations.extend(recommendations_data['remedies'].get('stress', []))
+        recommendations.extend(responses_data.get('stress', {}).get('solutions', []))
     if predictions[1] > anxiety_threshold:
-        recommendations.extend(recommendations_data['remedies'].get('anxiety', []))
+        recommendations.extend(responses_data.get('anxiety', {}).get('solutions', []))
     if not (predictions[0] > stress_threshold or predictions[1] > anxiety_threshold):
-        recommendations.append("Maintain a healthy lifestyle with balanced diet and regular exercise.")
+        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
 
     if sentiment[0]['label'] == 'NEGATIVE':
-        recommendations.append("It may be helpful to speak with a mental health professional.")
+        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
 
     return recommendations
+
+def generate_report(text, analysis_result, recommendations):
+    sentiment = analysis_result['sentiment'][0]['label']
+    sentiment_score = analysis_result['sentiment'][0]['score']
+    predictions = analysis_result['predictions']
+    topics = analysis_result['topics']
+
+    report = f"Input Text: {text}\n"
+    report += "Analysis Results:\n"
+    report += f"  Sentiment: {sentiment} (Score: {sentiment_score:.2f})\n"
+    
+    # Detailed psychological state
+    states = ["Stress", "Anxiety", "Fear", "Depression", "Other"]
+    report += "  Psychological States:\n"
+    for i, state in enumerate(states):
+        report += f"    {state}: {predictions[i] * 100:.2f}%\n"
+    
+    
+    # # Recommendations
+    # report += "Recommendations:\n"
+    # for rec in recommendations:
+    #     report += f"  - {rec}\n"
+
+    return report
 
 def get_analysis_with_recommendations(text):
     analysis_result = analyze_text(text)
@@ -94,15 +116,12 @@ def get_analysis_with_recommendations(text):
         'recommendations': recommendations
     }
 
-# Analyze each question and provide solutions
-results = {}
-for question in questions:
-    result = get_analysis_with_recommendations(question)
-    results[question] = result
+# Take single input from user
+user_input = input("Please enter your text: ")
 
-# Print results
-for question, result in results.items():
-    print(f"Question: {question}")
-    print(f"Analysis Results: {result['analysis']}")
-    print(f"Recommendations: {result['recommendations']}")
-    print()
+# Analyze the input and generate report
+result = get_analysis_with_recommendations(user_input)
+report = generate_report(user_input, result['analysis'], result['recommendations'])
+
+# Print the report
+print(report)

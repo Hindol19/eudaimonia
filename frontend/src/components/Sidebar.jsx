@@ -49,7 +49,12 @@ const Sidebar = ({ classes, activeTab, username }) => {
           Icon={HomeIcon}
           active={activeTab}
         />
-        <SidebarItem name="Chatbot" Icon={ChatBubbleIcon} active={activeTab} />
+        <SidebarItem
+          path="/survey"
+          name="Know About Yourself"
+          Icon={ChatBubbleIcon}
+          active={activeTab}
+        />
         <SidebarItem
           path="/apt"
           name="Make an Appointment"
