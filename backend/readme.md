@@ -12,7 +12,11 @@ pip install -r requirements.txt
 
 ```bash
 python backend\models\clusterQuestions.pyclusterQuestions.py
+```
+```bash
 python backend\models\clusterQuestions.pysentiment_test.py
+```
+```bash
 python backend\models\clusterQuestions.pydiagnos.py
 ```
 
