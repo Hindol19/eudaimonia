@@ -13,31 +13,6 @@ body {
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
-
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #1bbfa179;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #20818c;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #20818c69;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background-color: #20818c8e;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background-color: #133644;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background-color: #20637e;
+body::-webkit-scrollbar {
+  display: none;
 }
