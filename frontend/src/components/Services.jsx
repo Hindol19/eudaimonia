@@ -2,7 +2,7 @@ import React from 'react'
 
 const Services = () => {
   return (
-    <div className="container mt-[300px] mx-auto py-20" id='services'>
+    <div className="container mx-auto py-20" id='services'>
         <p className="text-base lg:text-xl font-medium text-gray-500 text-center">
             Why choose EUDAIMONIA
         </p>
@@ -21,13 +21,13 @@ const Services = () => {
           <img width="92" height="92" viewBox="0 0 92 92" src="survey.png" alt="v1" />
           <p className="text-2xl font-semibold">Survey</p>
           <p className="text-gray-500 text-center">
-            Not confident speaking publicly? <br /> Take our survey and let our AI answer your queries.
+            Not confident speaking publicly? <br /> chatbotname will be here whenever you need a friend.
           </p>
         </div> <div className="flex flex-col gap-5 items-center">
           <img width="92" height="92" viewBox="0 0 92 92" src="appointment.png" alt="v1" />
           <p className="text-2xl font-semibold">Appointment Booking</p>
           <p className="text-gray-500 text-center">
-            Want a personal session? <br /> Our built-in appointment booking system makes it easier.
+            Your smile is important. <br /> Keep a track of your progress with our happiness tracker.
           </p>
         </div>
       </div>

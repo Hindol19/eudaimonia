@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import Started from "../components/Started";
 import Services from "../components/Services";
 import Cta from "../components/Cta";
 import Team from "../components/Team";
@@ -20,7 +19,6 @@ export default function Home() {
       </Head>
       
       <Navbar/>
-      <Started/>
       <Services/>
       <Team/>
       <Cta/>
