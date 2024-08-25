@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Header from "@/components/Header";
 import axios from "axios";
+import { jsPDF } from "jspdf";
 
 const SurveyCard = ({ question, index, surveyList, setSurveyList }) => {
   const [newAnswer, setNewAnswer] = useState("");
@@ -28,6 +29,8 @@ const SurveyCard = ({ question, index, surveyList, setSurveyList }) => {
 
 const Survey = () => {
   const [surveyList, setSurveyList] = useState([]);
+  const [score, setScore] = useState({});
+  const [recc, setRecc] = useState([]);
   const qList = [
     {
       question:
@@ -49,13 +52,83 @@ const Survey = () => {
     },
   ];
 
+  // Call the function to generate and download the PDF
+  const generatePDF = (statesData, recommendations) => {
+    const doc = new jsPDF();
+
+    // Add title
+    doc.setFontSize(18);
+    doc.text("Mental Health Report", 105, 20, null, null, "center"); // Center the title
+
+    // Add a separator line
+    doc.setLineWidth(0.5);
+    doc.line(10, 30, 200, 30);
+
+    // Add Psychological States section
+    doc.setFontSize(16);
+    doc.text("Psychological States", 10, 40);
+
+    let yOffset = 50;
+    console.log(statesData);
+
+    Object.entries(statesData).forEach(([state, value]) => {
+      console.log(state, value);
+
+      // Ensure value is a number and format it, otherwise just print the value as is
+      const formattedValue =
+        typeof value === "number" ? `${value.toFixed(2)}%` : String(value);
+      doc.setFontSize(12);
+      doc.text(`${state}:`, 20, yOffset);
+      doc.text(formattedValue, 160, yOffset, null, null, "right"); // Align the value to the right
+      yOffset += 10;
+    });
+
+    // Check if yOffset is within page bounds
+    if (yOffset > 260) {
+      // Assuming A4 paper with 297mm height
+      doc.addPage();
+      yOffset = 20; // Reset offset for new page
+    }
+
+    // Add another separator line
+    doc.setLineWidth(0.5);
+    doc.line(10, yOffset, 200, yOffset);
+    yOffset += 10;
+
+    // Add Recommendations section
+    doc.setFontSize(16);
+    doc.text("Recommendations", 10, yOffset);
+    yOffset += 10;
+
+    recommendations.forEach((rec, index) => {
+      doc.setFontSize(12);
+      doc.text(`${index + 1}. ${rec}`, 20, yOffset);
+      yOffset += 10;
+    });
+
+    // Check if yOffset is within page bounds
+    if (yOffset > 260) {
+      // Assuming A4 paper with 297mm height
+      doc.addPage();
+      yOffset = 20; // Reset offset for new page
+    }
+
+    // Save and download the PDF
+    doc.save("Mental_Health_Report.pdf");
+  };
+  // generatePDF(arrayOfObjects);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const answer = surveyList.join(" ");
     const response = await axios.post("http://localhost:8000/generate_report", {
       answer,
     });
-    // console.log(sen);
+    setScore(response.data["Analysis Results"]["Psychological States"]);
+    setRecc(response.data["Recommendations"]);
+    generatePDF(score, recc);
+    console.log(score);
+    // console.log(recc);
+
     // Here you can send surveyList to your server using a fetch or axios call
   };
 

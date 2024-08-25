@@ -118,14 +118,19 @@ class Diagnose:
 
     def get_analysis_with_recommendations(text):
         analysis_result = Diagnose.analyze_text(text)
+        print(analysis_result)
         recommendations = Diagnose.provide_recommendations(
             predictions=analysis_result['predictions'],
             sentiment=analysis_result['sentiment']
         )
-        return {
+        result = {
             'analysis': analysis_result,
             'recommendations': recommendations
         }
+        report_dict = Diagnose.generate_report_dict(
+            text, result['analysis'], result['recommendations'])
+        # return json.dumps(report_dict, indent=2)
+        return report_dict
 
 # # Take single input from user
 # user_input = input("Please enter your text: ")

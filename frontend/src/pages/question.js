@@ -65,7 +65,7 @@ const PostQuestion = ({ hidden = true, userDetails, getQuestions }) => {
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
         />
-        <button className="bg-acc2 px-5 py-2 text-light rounded-md">
+        <button className="bg-acc2 px-5 py-2 text-light bg-dark rounded-md">
           Post
         </button>
       </form>

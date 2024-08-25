@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 from cluster import ClusterQuestions
 from diagnos import Diagnose
+import json
 
 
 def __init__(self):
@@ -153,7 +154,7 @@ def generate_report(request: Survey):
     request = str(request)
     # print(request, type(request))
     recommendations = Diagnose.get_analysis_with_recommendations(request)
-    print(recommendations)
+    return recommendations
 
 
 @app.post('/up_questions')
@@ -163,11 +164,12 @@ def up_questions(request: Question):
     # print(request)
     userid = db["users"].find_one({"username": request.username})['_id']
     question_object = request.model_dump()
+    # print(question_object)
     question_object['userid'] = userid
     question_object['label'] = ClusterQuestions.predict_label(request.question)
-    del question_object['username']
-    # print(question_object)
-    db.questions.insert_one(question_object)
+    # del question_object['username']
+    # # print(question_object)
+    # db.questions.insert_one(question_object)
 
 
 @app.post('/up_answer')
