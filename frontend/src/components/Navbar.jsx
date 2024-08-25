@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 
 const Navbar = () => {
     return (
-        <div className='container mx-auto py-4'>
+        <div className='container mx-auto py-4 fixed bg-dark bg-opacity-40 top-0 left-0 backdrop-blur-md'>
             <div className="flex justify-between items-center mx-6 gap-5">
                 <h2 className='text-lg italic'>Eudaimonia</h2>
                 <div className="flex justify-center lg:justify-between items-center gap-5">
