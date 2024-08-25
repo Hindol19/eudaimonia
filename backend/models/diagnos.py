@@ -4,15 +4,16 @@ from transformers import BertTokenizer, BertForSequenceClassification, pipeline
 from gensim import corpora
 from gensim.models import LdaModel
 import os
+import random
 
 # Define file paths
-model_save_path = os.path.join("backend", "models", "bert_psychological_state_model.pth")
-tokenizer_save_path = os.path.join("backend", "models", "bert_tokenizer")
-lda_model_save_path = os.path.join("backend", "models", "lda_model")
-dictionary_save_path = os.path.join("backend", "models", "lda_dictionary.dict")
-sentiment_pipeline_save_path = os.path.join("backend", "models", "sentiment_analysis_pipeline")
+model_save_path = os.path.join("backend", "models", "model", "bert_psychological_state_model.pth")
+tokenizer_save_path = os.path.join("backend", "models", "model", "bert_tokenizer")
+lda_model_save_path = os.path.join("backend", "models", "model", "lda_model")
+dictionary_save_path = os.path.join("backend", "models", "model", "lda_dictionary.dict")
+sentiment_pipeline_save_path = os.path.join("backend", "models", "model", "sentiment_analysis_pipeline")
 
-responses_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
+recommendations_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
 
 # Load the BERT model
 model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=5)
@@ -29,8 +30,8 @@ dictionary = corpora.Dictionary.load(dictionary_save_path)
 # Load sentiment analysis pipeline
 sentiment_pipeline = pipeline("sentiment-analysis", model=sentiment_pipeline_save_path, tokenizer=sentiment_pipeline_save_path)
 
-# Load JSON files
-with open(responses_file_path, 'r') as file:
+# Load JSON file
+with open(recommendations_file_path, 'r') as file:
     responses_data = json.load(file)
 
 # Define analysis functions
@@ -59,18 +60,23 @@ def analyze_text(text):
         'topics': topics
     }
 
-def provide_recommendations(predictions):
-    states = ["stress", "anxiety", "fear", "depression", "other"]
-    recommendations = []
-
-    for i, state in enumerate(states):
-        if predictions[i] > 0.7:  # Example threshold
-            recommendations.extend(responses_data.get(state, {}).get('solutions', []))
-
-    if not recommendations:  # If no specific state has high predictions
-        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
-
-    return recommendations
+def provide_recommendations(predictions, sentiment):
+    states = ["stress", "anxiety", "fear", "depression", "general"]
+    
+    # Find the index of the most significant psychological state
+    max_index = predictions.argmax()
+    max_state = states[max_index]
+    
+    # Retrieve the relevant recommendations
+    recommendations = responses_data.get(max_state, {}).get('solutions', [])
+    
+    # Select two random recommendations from the most significant state
+    if len(recommendations) >= 2:
+        random_recommendations = random.sample(recommendations, 2)
+    else:
+        random_recommendations = recommendations  # In case there are fewer than 2 recommendations
+    
+    return random_recommendations
 
 def generate_report(text, analysis_result, recommendations):
     sentiment = analysis_result['sentiment'][0]['label']
@@ -98,7 +104,8 @@ def generate_report(text, analysis_result, recommendations):
 def get_analysis_with_recommendations(text):
     analysis_result = analyze_text(text)
     recommendations = provide_recommendations(
-        predictions=analysis_result['predictions']
+        predictions=analysis_result['predictions'], 
+        sentiment=analysis_result['sentiment']
     )
     return {
         'analysis': analysis_result,

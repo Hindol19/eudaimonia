@@ -9,11 +9,11 @@ from gensim.models import LdaModel
 import numpy as np
 
 # Define paths for saving models
-model_save_path = "backend\\models\\bert_psychological_state_model.pth"
-tokenizer_save_path = "backend\\models\\bert_tokenizer"
-lda_model_save_path = "backend\\models\\lda_model"
-dictionary_save_path = "backend\\models\\lda_dictionary.dict"
-sentiment_pipeline_save_path = "backend\\models\\sentiment_analysis_pipeline"
+model_save_path = "backend\\models\\model\\bert_psychological_state_model.pth"
+tokenizer_save_path = "backend\\models\\model\\bert_tokenizer"
+lda_model_save_path = "backend\\models\\model\\lda_model"
+dictionary_save_path = "backend\\models\\model\\lda_dictionary.dict"
+sentiment_pipeline_save_path = "backend\\models\\model\\sentiment_analysis_pipeline"
 
 # Initialize BERT tokenizer and model for psychological state classification
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
