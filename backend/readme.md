@@ -11,9 +11,13 @@ pip install -r requirements.txt
 ### Train the models
 
 ```bash
-python clusterQuestions.py
-python sentiment_test.py
-python diagnos.py
+python backend\models\clusterQuestions.py
+```
+```bash
+python backend\models\sentiment_test.py
+```
+```bash
+python backend\models\diagnos.py
 ```
 
 ### Start Server
