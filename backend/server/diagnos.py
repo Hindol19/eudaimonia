@@ -7,7 +7,7 @@ import os
 import random
 
 
-class Diagnos:
+class Diagnose:
     # Define file paths
     model_save_path = os.path.join(
         "..", "models", "model", "bert_psychological_state_model.pth")
