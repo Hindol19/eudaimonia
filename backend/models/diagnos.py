@@ -1,108 +1,84 @@
+from gemini import GeminiClient  # Hypothetical library
 import json
-import torch
-from transformers import BertTokenizer, BertForSequenceClassification, pipeline
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from gensim import corpora
-from gensim.models import LdaModel
-import numpy as np
 
-model_save_path = "backend\\models\\bert_psychological_state_model.pth"
-tokenizer_save_path = "backend\\models\\bert_tokenizer"
-lda_model_save_path = "backend\\models\\lda_model"
-dictionary_save_path = "backend\\models\\lda_dictionary.dict"
-sentiment_pipeline_save_path = "backend\\models\\sentiment_analysis_pipeline"
-
-# Load the BERT model
-model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=5)
-model.load_state_dict(torch.load(model_save_path))
-model.eval()
-
-# Load the tokenizer
-tokenizer = BertTokenizer.from_pretrained(tokenizer_save_path)
-
-# Load the LDA model and dictionary
-lda_model = LdaModel.load(lda_model_save_path)
-dictionary = corpora.Dictionary.load(dictionary_save_path)
-
-# Load sentiment analysis pipeline
-sentiment_pipeline = pipeline("sentiment-analysis", model=sentiment_pipeline_save_path, tokenizer=sentiment_pipeline_save_path)
+# Initialize the Gemini client with your API key
+client = GeminiClient(api_key='your-gemini-api-key')
 
 # Define file paths
-questions_file_path = 'backend\\models\\data\\sentiment_questions.json'
-recommendations_file_path = 'backend\\models\\data\\recommendations.json'
+responses_file_path = "backend/models/data/responses.json"
 
-# Load JSON files
-with open(questions_file_path, 'r') as file:
-    questions = json.load(file)
-
-with open(recommendations_file_path, 'r') as file:
-    recommendations_data = json.load(file)
+# Load responses data
+with open(responses_file_path, 'r') as file:
+    responses_data = json.load(file)
 
 # Define analysis functions
 def analyze_sentiment(text):
-    return sentiment_pipeline(text)
+    result = client.sentiment_analysis(text)
+    return result
 
 def classify_psychological_state(text):
-    inputs = tokenizer(text, return_tensors="pt")
-    outputs = model(**inputs)
-    predictions = torch.sigmoid(outputs.logits).detach().numpy().flatten()  # Flatten the array
-    return predictions
+    result = client.psychological_state_classification(text)
+    return result
 
 def analyze_topics(text):
-    bow = dictionary.doc2bow(text.split())
-    topics = lda_model.get_document_topics(bow)
-    return topics
-
-def analyze_text(text):
-    sentiment = analyze_sentiment(text)
-    predictions = classify_psychological_state(text)
-    topics = analyze_topics(text)
-    
-    return {
-        'sentiment': sentiment,
-        'predictions': predictions,
-        'topics': topics
-    }
+    result = client.topic_modeling(text)
+    return result
 
 def provide_recommendations(predictions, sentiment):
-    # Example thresholds and recommendations
     stress_threshold = 0.7
     anxiety_threshold = 0.7
 
     recommendations = []
 
-    if predictions[0] > stress_threshold:
-        recommendations.extend(recommendations_data['remedies'].get('stress', []))
-    if predictions[1] > anxiety_threshold:
-        recommendations.extend(recommendations_data['remedies'].get('anxiety', []))
-    if not (predictions[0] > stress_threshold or predictions[1] > anxiety_threshold):
-        recommendations.append("Maintain a healthy lifestyle with balanced diet and regular exercise.")
+    if predictions['stress'] > stress_threshold:
+        recommendations.extend(responses_data.get('stress', {}).get('solutions', []))
+    if predictions['anxiety'] > anxiety_threshold:
+        recommendations.extend(responses_data.get('anxiety', {}).get('solutions', []))
+    if not (predictions['stress'] > stress_threshold or predictions['anxiety'] > anxiety_threshold):
+        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
 
-    if sentiment[0]['label'] == 'NEGATIVE':
-        recommendations.append("It may be helpful to speak with a mental health professional.")
+    if sentiment['label'] == 'NEGATIVE':
+        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
 
-    return recommendations
+    return ' '.join(recommendations)
+
+def generate_report(text, sentiment, predictions, topics, recommendations):
+    report = f"Input Text: {text}\n"
+    report += "Analysis Results:\n"
+    report += f"  Sentiment: {sentiment['label']} (Score: {sentiment['score']:.2f})\n"
+    
+    # Psychological States
+    report += "  Psychological States:\n"
+    for state, prob in predictions.items():
+        report += f"    {state}: {prob * 100:.2f}%\n"
+    
+    # Topics
+    report += "  Topics Detected:\n"
+    for topic in topics:
+        report += f"    {topic}\n"
+    
+    # Recommendations
+    report += "Recommendations:\n"
+    report += f"  - {recommendations}\n"
+
+    return report
 
 def get_analysis_with_recommendations(text):
-    analysis_result = analyze_text(text)
-    recommendations = provide_recommendations(
-        predictions=analysis_result['predictions'], 
-        sentiment=analysis_result['sentiment']
-    )
+    sentiment = analyze_sentiment(text)
+    predictions = classify_psychological_state(text)
+    topics = analyze_topics(text)
+    recommendations = provide_recommendations(predictions, sentiment)
     return {
-        'analysis': analysis_result,
+        'sentiment': sentiment,
+        'predictions': predictions,
+        'topics': topics,
         'recommendations': recommendations
     }
 
-# Analyze each question and provide solutions
-results = {}
-for question in questions:
-    result = get_analysis_with_recommendations(question)
-    results[question] = result
+# Example usage
+text_input = "I feel overwhelmed and exhausted. I have trouble sleeping and focusing."
+result = get_analysis_with_recommendations(text_input)
 
-# Print results
-for question, result in results.items():
-    print(f"Question: {question}")
-    print(f"Analysis Results: {result['analysis']}")
-    print(f"Recommendations: {result['recommendations']}")
-    print()
+# Generate and print report
+report = generate_report(text_input, result['sentiment'], result['predictions'], result['topics'], result['recommendations'])
+print(report)
