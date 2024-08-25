@@ -12,7 +12,6 @@ lda_model_save_path = os.path.join("backend", "models", "lda_model")
 dictionary_save_path = os.path.join("backend", "models", "lda_dictionary.dict")
 sentiment_pipeline_save_path = os.path.join("backend", "models", "sentiment_analysis_pipeline")
 
-recommendations_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
 responses_file_path = os.path.join('backend', 'models', 'data', 'recommendations.json')
 
 # Load the BERT model
@@ -31,9 +30,6 @@ dictionary = corpora.Dictionary.load(dictionary_save_path)
 sentiment_pipeline = pipeline("sentiment-analysis", model=sentiment_pipeline_save_path, tokenizer=sentiment_pipeline_save_path)
 
 # Load JSON files
-with open(recommendations_file_path, 'r') as file:
-    recommendations_data = json.load(file)
-
 with open(responses_file_path, 'r') as file:
     responses_data = json.load(file)
 
@@ -63,20 +59,15 @@ def analyze_text(text):
         'topics': topics
     }
 
-def provide_recommendations(predictions, sentiment):
-    stress_threshold = 0.7
-    anxiety_threshold = 0.7
-
+def provide_recommendations(predictions):
+    states = ["stress", "anxiety", "fear", "depression", "other"]
     recommendations = []
 
-    if predictions[0] > stress_threshold:
-        recommendations.extend(responses_data.get('stress', {}).get('solutions', []))
-    if predictions[1] > anxiety_threshold:
-        recommendations.extend(responses_data.get('anxiety', {}).get('solutions', []))
-    if not (predictions[0] > stress_threshold or predictions[1] > anxiety_threshold):
-        recommendations.extend(responses_data.get('general', {}).get('solutions', []))
+    for i, state in enumerate(states):
+        if predictions[i] > 0.7:  # Example threshold
+            recommendations.extend(responses_data.get(state, {}).get('solutions', []))
 
-    if sentiment[0]['label'] == 'NEGATIVE':
+    if not recommendations:  # If no specific state has high predictions
         recommendations.extend(responses_data.get('general', {}).get('solutions', []))
 
     return recommendations
@@ -97,19 +88,17 @@ def generate_report(text, analysis_result, recommendations):
     for i, state in enumerate(states):
         report += f"    {state}: {predictions[i] * 100:.2f}%\n"
     
-    
-    # # Recommendations
-    # report += "Recommendations:\n"
-    # for rec in recommendations:
-    #     report += f"  - {rec}\n"
+    # Recommendations
+    report += "Recommendations:\n"
+    for rec in recommendations:
+        report += f"  - {rec}\n"
 
     return report
 
 def get_analysis_with_recommendations(text):
     analysis_result = analyze_text(text)
     recommendations = provide_recommendations(
-        predictions=analysis_result['predictions'], 
-        sentiment=analysis_result['sentiment']
+        predictions=analysis_result['predictions']
     )
     return {
         'analysis': analysis_result,
