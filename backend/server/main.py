@@ -25,6 +25,7 @@ def __init__(self):
     self.diagnose = Diagnose()
 # recommendations = Diagnose.get_analysis_with_recommendations(text)
 
+
 app = FastAPI()
 
 ######################################################

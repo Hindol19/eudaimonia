@@ -6,6 +6,7 @@ from gensim.models import LdaModel
 import os
 import random
 
+
 # Define file paths
 model_save_path = os.path.join("..", "models", "model", "bert_psychological_state_model.pth")
 tokenizer_save_path = os.path.join("..", "models", "model", "bert_tokenizer")
