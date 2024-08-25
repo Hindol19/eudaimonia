@@ -38,7 +38,7 @@ const Register = () => {
   return (
     <div className="flex flex-col items-center justify-center h-[100vh]">
       <h1 className="uppercase text-4xl text-dark font-semibold my-10 md:text-2xl">
-        WELCOME TO WEBSITE_NAME
+        WELCOME TO EUDAIMONIA
       </h1>
       <Link
         className="text-xl mb-6 text-altDark hover:underline hover:text-acc"
