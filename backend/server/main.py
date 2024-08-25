@@ -11,6 +11,7 @@ import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from cluster import ClusterQuestions
+from diagnos import Diagnose
 
 
 def __init__(self):
@@ -19,6 +20,10 @@ def __init__(self):
 # score = Happiness.calculate_happiness_score(input_dict)
 # label = ClusterQuestions.predict_label(question)
 
+
+def __init__(self):
+    self.diagnose = Diagnose()
+# recommendations = Diagnose.get_analysis_with_recommendations(text)
 
 app = FastAPI()
 

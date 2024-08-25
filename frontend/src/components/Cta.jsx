@@ -7,7 +7,7 @@ const Cta = () => {
         <p className='text-base sm:text-lg lg:text-2xl font-medium text-center'>Choose to live a happier tomorrow.</p>
         <div className="flex flex-row gap-3 sm:gap-5 lg:gap-10 items-center mt-5">
             <input type="text" className='px-5 py-5 rounded-full w-72 lg:w-96 outline-none bg-[#f8fafe]' placeholder='Send us a message' />
-            <button className='btn btn-sm lg:btn-lg bg-[#524fd5] text-white btn-lg rounded-full border-none px-10 py-2'>Send</button>
+            <button className='btn btn-sm lg:btn-lg bg-dark text-white btn-lg rounded-full border-none px-10 py-2 hover:border-solid hover:border-2 hover:border-dark hover:bg-light hover:text-dark'>Send</button>
         </div>
     </div>
   )
