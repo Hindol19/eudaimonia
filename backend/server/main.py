@@ -164,11 +164,12 @@ def up_questions(request: Question):
     # print(request)
     userid = db["users"].find_one({"username": request.username})['_id']
     question_object = request.model_dump()
+    # print(question_object)
     question_object['userid'] = userid
     question_object['label'] = ClusterQuestions.predict_label(request.question)
-    del question_object['username']
-    # print(question_object)
-    db.questions.insert_one(question_object)
+    # del question_object['username']
+    # # print(question_object)
+    # db.questions.insert_one(question_object)
 
 
 @app.post('/up_answer')
