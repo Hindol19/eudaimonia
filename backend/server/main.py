@@ -63,6 +63,10 @@ class Login(BaseModel):
     password: str
 
 
+class Survey(BaseModel):
+    answer: str
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -136,6 +140,11 @@ async def login(request: Login):
     access_token = create_access_token(data={"sub": user["username"]})
 
     return {"access_token": access_token, "token_type": "bearer", "username": user["username"], "usertype": user["usertype"]}
+
+
+@app.post('/generate_report')
+def generate_report(request: Survey):
+    print(request)
 
 
 @app.post('/up_questions')
