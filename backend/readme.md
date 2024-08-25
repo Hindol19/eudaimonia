@@ -17,7 +17,7 @@ python backend\models\clusterQuestions.py
 python backend\models\seniment_test.py
 ```
 ```bash
-
+python backend\models\diagnos.py
 ```
 
 ### Start Server
