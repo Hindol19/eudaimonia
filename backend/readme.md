@@ -14,10 +14,10 @@ pip install -r requirements.txt
 python backend\models\clusterQuestions.py
 ```
 ```bash
-python backend\models\sentiment_test.py
+python backend\models\seniment_test.py
 ```
 ```bash
-python backend\models\diagnos.py
+
 ```
 
 ### Start Server
