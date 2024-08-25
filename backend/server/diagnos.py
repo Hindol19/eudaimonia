@@ -123,7 +123,7 @@ class Diagnose:
             sentiment=analysis_result['sentiment']
         )
         return {
-            'analysis': analysis_result,
+            'Analysis': analysis_result,
             'recommendations': recommendations
         }
 
