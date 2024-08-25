@@ -4,7 +4,7 @@ import Link from 'next/link'
 const Started = () => {
   return (
     <div>
-        <div className='h-[300px] w-[50%] flex flex-col justify-center items-center mt-20'>
+        <div className='h-[300px] w-[50%] flex flex-col justify-center items-center mt-[200px]'>
             <p className='text-3xl mb-5'>Journey Beyond The Ordinary</p>
             <button className="hero-button rounded py-2 px-6 bg-dark text-white text-xl">
                <Link href='/register'>Get Started</Link> 
